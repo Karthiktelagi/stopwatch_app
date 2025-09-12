@@ -42,6 +42,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
   late Timer _timer;
   Duration _elapsed = Duration.zero;
   bool _isRunning = false;
+  final List<String> _laps = [];
+// NEW: to store lap times
 
   void _startPause() {
     if (_isRunning) {
@@ -64,6 +66,13 @@ class _StopwatchPageState extends State<StopwatchPage> {
     setState(() {
       _elapsed = Duration.zero;
       _isRunning = false;
+      _laps.clear(); // reset laps also
+    });
+  }
+
+  void _addLap() {
+    setState(() {
+      _laps.insert(0, _formatTime(_elapsed)); // latest lap at top
     });
   }
 
@@ -149,7 +158,45 @@ class _StopwatchPageState extends State<StopwatchPage> {
                     ),
                     child: const Text("Reset"),
                   ),
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: _isRunning ? _addLap : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text("Lap"),
+                  ),
                 ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // Lap list
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _laps.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Text(
+                        "Lap ${_laps.length - index}",
+                        style: const TextStyle(color: Colors.white70),
+                      ),
+                      title: Text(
+                        _laps[index],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

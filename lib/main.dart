@@ -114,7 +114,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.5), // updated
+                      color: Colors.black.withValues(alpha: 0.5), // updated file 
                       blurRadius: 12,
                       offset: const Offset(0, 6),
                     ),
@@ -125,7 +125,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
                   style: theme.textTheme.displayLarge,
                 ),
               ),
-              const SizedBox(height: 32),
+              // changed the height
+              const SizedBox(height: 35),
 
               // Buttons
               Row(
